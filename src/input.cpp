@@ -1,8 +1,11 @@
 #include "input.h"
+#include "ps4_input.h"
 #include <Arduino.h>
 
 void initInput(){
     Serial.begin(115200);
+    // initialize PS4 controller support (non-blocking)
+    initPS4Input();
 }
 
 bool tryReadDirection(Direction &outDir){
@@ -45,4 +48,6 @@ void readSerialAndApplyDirection(Game &game){
             game.reset();
         }
     }
+    // Also keep PS4 input in the loop and apply direction and reset if present
+    readPS4AndApplyDirection(game);
 }
